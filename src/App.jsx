@@ -22,24 +22,24 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: 'Handwritten Digit Interpreter',
-      description: 'Coded a neural network using the MNIST training set and validated its performance to produce a model that correctly identified the handwritten digit in test cases 80% of the time.',
-      technologies: ['Python', 'PyTorch', 'Matplotlib', 'NumPy'],
-      githubLink: '#',
+      title: 'Square One App',
+      description: "Developed a cross-platform mobile application using React Native, implementing key features including user authentication, activity tracking (sleep, exercise, nutrition), and dynamic health management tools to promote children's health education.",
+      technologies: ['React Native', 'Firebase'],
+      githubLink: 'https://github.com/SquareOneOrg/SQ1App',
       liveLink: '#'
     },
     {
       title: 'Spotify Top Songs Analysis',
       description: "Built a web application using Streamlit, Spotipy, and the Spotify Web API to analyze and visualize the features (e.g., acousticness, danceability, energy, valence) of a user's top songs.",
       technologies: ['Python', 'Spotipy', 'Streamlit', 'Spotify Web API'],
-      githubLink: '#',
+      githubLink: 'https://github.com/daniel-kimm/yourspotifyanalysis',
       liveLink: '#'
     },
     {
       title: 'This Website',
       description: "Check out the code for the website you're looking at right now!",
       technologies: ['React', 'TailwindCSS', 'Lucide Icons', 'Vercel'],
-      githubLink: '#',
+      githubLink: 'https://github.com/daniel-kimm/danielkim',
       liveLink: '#'
     }
   ];
