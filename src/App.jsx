@@ -9,25 +9,22 @@ const Portfolio = () => {
 
   // Fetch GitHub contributions
   useEffect(() => {
-    console.log('Fetching GitHub contributions...');
-    fetch('http://localhost:3000/api/contributions')
-      .then(response => {
+    const fetchContributions = async () => {
+      try {
+        console.log('Fetching GitHub contributions...');
+        const response = await fetch('https://kaival.dev/api/github/contributions/danielkim');
         console.log('Response status:', response.status);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
+        const data = await response.json();
         console.log('Raw data received:', data);
         console.log('Number of days with data:', data.length);
         console.log('Sample of data:', data.slice(0, 5));
         setContributions(data);
-      })
-      .catch(error => {
-        console.error('Error fetching contributions:', error);
-        setContributions([]);
-      });
+      } catch (error) {
+        console.error('Error fetching GitHub contributions:', error);
+      }
+    };
+
+    fetchContributions();
   }, []);
 
   // Setup intersection observer for animation
