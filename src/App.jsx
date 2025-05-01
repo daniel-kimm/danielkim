@@ -1,9 +1,34 @@
 import React, { useEffect } from 'react';
 import { Github, Linkedin, Mail, ExternalLink, Menu } from 'lucide-react';
 import profilePic from './assets/IMG_4992.jpg'
+import GitHubContributions from './components/GitHubContributions';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [contributions, setContributions] = React.useState([]);
+
+  // Fetch GitHub contributions
+  useEffect(() => {
+    console.log('Fetching GitHub contributions...');
+    fetch('http://localhost:3000/api/contributions')
+      .then(response => {
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Raw data received:', data);
+        console.log('Number of days with data:', data.length);
+        console.log('Sample of data:', data.slice(0, 5));
+        setContributions(data);
+      })
+      .catch(error => {
+        console.error('Error fetching contributions:', error);
+        setContributions([]);
+      });
+  }, []);
 
   // Setup intersection observer for animation
   useEffect(() => {
@@ -22,48 +47,46 @@ const Portfolio = () => {
 
   const projects = [
     {
+      title: 'Lumo',
+      description: "Lumo is a full-stack application implementing CLIP-based semantic image retrieval with vector similarity search in PostgreSQL. The system processes natural language queries to return contextually relevant images from a 10K+ image dataset.",
+      technologies: ['Next.js', 'React', 'TailwindCSS', 'PostgreSQL', 'Python', 'CLIP', 'PyTorch', 'PIL', 'AWS'],
+      githubLink: '#',
+      liveLink: '#'
+    },
+    {
       title: 'Square One App',
-      description: "Developed a cross-platform mobile application with a Firebase backend using React Native, implementing key features including user authentication, activity tracking (sleep, exercise, nutrition), and dynamic health management tools to promote children's health education.",
-      technologies: ['React Native', 'Firebase'],
+      description: "Developed a cross-platform mobile application using React Native, implementing key features including user authentication, activity tracking (sleep, exercise, nutrition), and dynamic health management tools to promote children's health education.",
+      technologies: ['React Native', 'Firebase', 'Expo'],
       githubLink: 'https://github.com/SquareOneOrg/SQ1App',
       liveLink: '#'
     },
     {
-      title: 'Spotify Top Songs Analysis',
-      description: "Built a web application using Streamlit, Spotipy, and the Spotify Web API to analyze and visualize the features (e.g., acousticness, danceability, energy, valence) of a user's top songs.",
-      technologies: ['Python', 'Spotipy', 'Streamlit', 'Spotify Web API'],
-      githubLink: 'https://github.com/daniel-kimm/yourspotifyanalysis',
-      liveLink: '#'
-    },
-    {
-      title: 'This Website',
-      description: "Check out the code for the website you're looking at right now!",
-      technologies: ['React', 'TailwindCSS', 'Lucide Icons', 'Vercel'],
-      githubLink: 'https://github.com/daniel-kimm/danielkim',
+      title: 'Northwestern CTECs Summarizer',
+      description: "The Northwestern CTECs Summarizer is a full-stack application implementing RAG-based semantic search with SBERT embeddings. The system processes student queries to return contextually relevant course insights from Northwestern's course review database, featuring real-time chat streaming via Server-Sent Events and local storage for conversation history.",
+      technologies: ['React', 'Flask', 'OpenAI API', 'AWS'],
+      githubLink: '#',
       liveLink: '#'
     }
   ];
 
   const skills = [
     'Python',
+    'Java',
+    'JavaScript',
+    'C++',
+    'HTML/CSS',
+    'Racket',
     'React/Next.js',
     'Node.js',
-    'Java',
-    'HTML/CSS',
     'AWS',
-    'JavaScript',
     'Figma',
     'PyTorch',
     'Flask',
-    'Racket',
-    'Matplotlib',
-    'NumPy',
-    'Spotipy',
-    'Streamlit',
-    'Spotify Web API',
     'TailwindCSS',
-    'Lucide Icons',
-    'Vite'
+    'PostgreSQL',
+    'AWS',
+    'Firebase',
+    'Supabase',
   ];
 
   const scrollToSection = (e, elementId) => {
@@ -79,7 +102,7 @@ const Portfolio = () => {
 
   return (
     <div className="relative min-h-screen bg-stone-100 w-full">
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         * {
           margin: 0;
           padding: 0;
@@ -107,7 +130,7 @@ const Portfolio = () => {
       <nav className="bg-[#727D73] text-white shadow-md fixed w-full z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Daniel Kim</h1>
+            <h1 className="text-2xl font-bold text-[#F0F0D7]">Daniel Kim</h1>
             <div className="hidden md:flex gap-6">
               <a href="#about" className="text-[#F0F0D7] hover:text-[#D0DDD0] transition">About</a>
               <a href="#projects" className="text-[#F0F0D7] hover:text-[#D0DDD0] transition">Projects</a>
@@ -126,7 +149,7 @@ const Portfolio = () => {
               Hi, I'm Daniel Kim.
             </h1>
             <p className="text-lg md:text-xl text-[#F0F0D7] mb-8 max-w-2xl mx-auto px-4">
-              Software Engineer
+              Software Engineer & Artist
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 px-4">
               <a 
@@ -142,6 +165,7 @@ const Portfolio = () => {
                 View my work
               </a>
             </div>
+            {contributions.length > 0 && <GitHubContributions data={contributions} />}
           </div>
         </div>
       </section>
