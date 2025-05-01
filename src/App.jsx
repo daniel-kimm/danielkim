@@ -46,7 +46,8 @@ const Portfolio = () => {
 
   const skills = [
     'Python',
-    'React',
+    'React/Next.js',
+    'Node.js',
     'Java',
     'HTML/CSS',
     'AWS',
@@ -162,7 +163,7 @@ const Portfolio = () => {
               Hey! I'm Daniel, a freshman at Northwestern University studying Computer Science and Art. I'm passionate about blending the technical aspects of software engineering with creativity and artistic design. 
               </p>
               <p className="text-[#727D73] mb-4">
-              In the future, I hope to work on projects that combine my skills in software engineering and art, contributing to fields like game development, AI, and interactive media. I’m excited to connect with others who share a passion for innovation and creativity in tech.
+              In the future, I hope to work on projects that combine my skills in software engineering and art, contributing to fields like game development, AI, and interactive media. I'm excited to connect with others who share a passion for innovation and creativity in tech.
               </p>
               <p className="text-[#727D73]">
                 In my free time, you can find me making art, playing the guitar, or playing tennis with my family. Feel free to reach out to me!
