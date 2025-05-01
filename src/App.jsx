@@ -12,7 +12,7 @@ const Portfolio = () => {
     const fetchContributions = async () => {
       try {
         console.log('Fetching GitHub contributions...');
-        const response = await fetch('https://kaival.dev/api/github/contributions/danielkim');
+        const response = await fetch('https://kaival.dev/api/github/contributions/daniel-kimm');
         console.log('Response status:', response.status);
         const data = await response.json();
         console.log('Raw data received:', data);
