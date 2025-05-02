@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Github, Linkedin, Mail, ExternalLink, Menu } from 'lucide-react';
 import profilePic from './assets/IMG_4992.jpg'
 import GitHubContributions from './components/GitHubContributions';
@@ -6,21 +6,51 @@ import GitHubContributions from './components/GitHubContributions';
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [contributions, setContributions] = React.useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch GitHub contributions
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        console.log('Fetching GitHub contributions...');
-        const response = await fetch('https://kaival.dev/api/github/contributions/daniel-kimm');
-        console.log('Response status:', response.status);
+        setLoading(true);
+        const username = 'daniel-kimm';
+        // Using a different CORS proxy
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const targetUrl = `https://kaival.dev/api/contributions?user=${username}`;
+        const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+          headers: {
+            'Accept': 'application/json',
+            'User-Agent': 'Mozilla/5.0'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        console.log('Raw data received:', data);
-        console.log('Number of days with data:', data.length);
-        console.log('Sample of data:', data.slice(0, 5));
-        setContributions(data);
-      } catch (error) {
-        console.error('Error fetching GitHub contributions:', error);
+        console.log('Contributions data received:', data);
+
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid data format received from API');
+        }
+
+        // Transform the data to ensure it has the correct format
+        const transformedData = data.map(contribution => ({
+          date: contribution.date,
+          count: parseInt(contribution.count) || 0
+        }));
+
+        console.log('Transformed contributions:', transformedData);
+        setContributions(transformedData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching contributions:', err);
+        setError(err.message);
+        setContributions([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -162,7 +192,9 @@ const Portfolio = () => {
                 View my work
               </a>
             </div>
-            {contributions.length > 0 && <GitHubContributions data={contributions} />}
+            {loading && <div className="text-[#F0F0D7]">Loading contributions...</div>}
+            {error && <div className="text-red-500">Error: {error}</div>}
+            {!loading && !error && <GitHubContributions data={contributions} />}
           </div>
         </div>
       </section>
