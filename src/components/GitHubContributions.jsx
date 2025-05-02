@@ -55,7 +55,7 @@ export default function GitHubContributions({ data }) {
 
   // Get the intensity color based on contribution count
   const getColor = (count) => {
-    if (!count || count === 0) return 'bg-[#F0F0D7]/10';
+    if (!count || count === 0) return 'bg-[#F0F0D7]/10'; // Light background for empty cells
     if (count === 1) return 'bg-[#9be9a8]';
     if (count <= 3) return 'bg-[#40c463]';
     if (count <= 6) return 'bg-[#30a14e]';
@@ -64,12 +64,14 @@ export default function GitHubContributions({ data }) {
 
   return (
     <div className="mt-8 fade-in">
-      <h3 className="text-[#F0F0D7] text-center mb-2">GitHub Contributions</h3>
       <div className="flex flex-col items-center">
-        <div className="flex gap-2 relative">
-          <div className="text-sm text-[#F0F0D7] absolute -top-6 right-0">
+        <div className="w-full max-w-2xl relative mb-8">
+          <h3 className="text-[#F0F0D7] text-center text-lg font-semibold">GitHub Contributions</h3>
+          <div className="text-sm text-[#F0F0D7] absolute top-0 right-0">
             {totalContributions} contributions
           </div>
+        </div>
+        <div className="flex gap-2">
           {last6Months.map(({ name, year, daysInMonth, monthKey, firstDayOfWeek }) => (
             <div key={monthKey} className="flex flex-col items-center">
               <div className="text-[#F0F0D7] text-xs mb-1">{name}</div>
